@@ -1,6 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
-// alteração feita pela Thaliaaaaaaaaaaaaaaaaaaaagita  
+ 
 
 public class App {
     // Estes caracteres são aceitos como caracteres para representarem
