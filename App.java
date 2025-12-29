@@ -409,8 +409,18 @@ public class App {
      * Nível de complexidade: 3 de 10
      */
     static void limparTela() {
-        //TODO 25: Implementar método conforme explicação        
-    }
+        //TODO 25: Implementar método conforme explicação,  Lucas
+    
+            try {
+                new ProcessBuilder("cmd", "/c", "cls")
+                        .inheritIO()
+                        .start()
+                        .waitFor();
+            } catch (Exception e) {
+                System.out.println("Erro ao limpar a tela: " + e.getMessage());
+            }
+        }
+
 
     /*
      * Descrição: Utilizado para imprimir o tabuleiro o conteúdo do tabuleiro na
@@ -455,7 +465,13 @@ public class App {
      * Nível Complexidade: 2 de 10
      */
     static void exibirVitoriaComputador() {
-        //TODO 28: Implementar método conforme explicação
+        //TODO 28: Implementar método conforme explicação, Lucas
+        System.out.println("O computador venceu!");
+        System.out.println();
+        System.out.println(" \\O/ ");
+        System.out.println("  |  ");
+        System.out.println(" / \\ ");
+
     }
 
     /*
@@ -466,7 +482,13 @@ public class App {
      * Nível Complexidade: 2 de 10
      */
     static void exibirVitoriaUsuario() {
-        //TODO 29: Implementar método conforme explicação
+        //TODO 29: Implementar método conforme explicação, Lucas
+        System.out.println("O usuário venceu!");
+        System.out.println();
+        System.out.println(" \\O/ ");               
+        System.out.println("  |  ");
+        System.out.println(" / \\ ");
+
     }
 
     /*
@@ -477,7 +499,10 @@ public class App {
      * Nível Complexidade: 2 de 10
      */
     static void exibirEmpate() {
-        //TODO 30: Implementar método conforme explicação
+        //TODO 30: Implementar método conforme explicação, Lucas
+        System.out.println("Ocorreu empate!");
+        System.out.println(" -------");
+        System.out.println("  0 X 0  ");
     }
 
     /*
@@ -489,7 +514,9 @@ public class App {
      * Nível de complexidade: 3 de 10
      */
     static boolean teveEmpate() {
-        //TODO 31: Implementar método conforme explicação
+        //TODO 31: Implementar método conforme explicação, Lucas
+        String posicoesLivres = retornarPosicoesLivres();
+        return posicoesLivres.isEmpty();
 
     }
 
@@ -502,7 +529,9 @@ public class App {
      * Nível de complexidade: 3 de 10
      */
     static boolean sortearValorBooleano() {
-        //TODO 32: Implementar método conforme explicação
+        //TODO 32: Implementar método conforme explicação, Lucas
+        Random random = new Random();
+        return random.nextBoolean();
     }
 
 
