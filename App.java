@@ -251,7 +251,21 @@ public class App {
      * Nível de complexidade: 6 de 10
      */
     static int[] obterJogadaComputador(String posicoesLivres, Scanner teclado) {
-        //TODO 15: Implementar método conforme explicação
+        if (posicoesLivres == null || posicoesLivres.isEmpty()) {
+            return new int[]{-1, -1};
+        }
+        String[] jogadas = posicoesLivres.split(";");
+        Random random = new Random();
+        while (true) {
+            int idx = random.nextInt(jogadas.length);
+            String candidato = jogadas[idx];
+            if (candidato != null) {
+                candidato = candidato.trim();
+                if (candidato.length() >= 2) {
+                    return converterJogadaStringParaVetorInt(candidato);
+                }
+            }
+        }
     }
 
     /*
@@ -264,7 +278,18 @@ public class App {
      * Nível de complexidade: 4 de 10
      */
     static int[] converterJogadaStringParaVetorInt(String jogada) {
-        //TODO 16: Implementar método conforme explicação
+        if (jogada == null || jogada.length() < 2) {
+            return new int[]{-1, -1};
+        }
+        jogada = jogada.trim();
+        char a = jogada.charAt(0);
+        char b = jogada.charAt(1);
+        if (!Character.isDigit(a) || !Character.isDigit(b)) {
+            return new int[]{-1, -1};
+        }
+        int linha = Character.getNumericValue(a);
+        int coluna = Character.getNumericValue(b);
+        return new int[]{linha, coluna};
     }
 
     /*
