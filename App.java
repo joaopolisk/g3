@@ -90,24 +90,19 @@ public class App {
     }
 
 
-    /*
-     * Descrição: Utilizado para iniciar a matriz/tabuleiro com o caractere ' '
-     * espaço, no início do jogo. Matrizes de char precisam ter um valor
-     * diferente de '' vazio. A idéia é, se tiver ' ' espaço, a posição está
-     * livre. Qualquer outro caractere presente na posição, representa o
-     * caractere do jogador em questão: usuário ou computador. Um exemplo seria,
-     * 'X' para usuário e 'O' para computador. Para o primeiro nível de
-     * complexidade considere um tabuleiro apenas de tamanho 3x3, 3 linhas e 3
-     * colunas. 
-     * Nível de complexidade: 3 de 10
-     */
+ 
     static void inicializarTabuleiro() {
-        for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
-            for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
-                tabuleiro[i][j] = ' ';
-            }
+    // TODO 10: Inicializa o tabuleiro com espaços em branco
+    // Percorre todas as linhas do tabuleiro
+         for (int linha = 0; linha < TAMANHO_TABULEIRO; linha++) {
+    // Percorre todas as colunas do tabuleiro
+            for (int coluna = 0; coluna < TAMANHO_TABULEIRO; coluna++) {
+   // Inicializa cada posição com espaço em branco.
+            tabuleiro[linha][coluna] = ' ';
         }
     }
+}
+
 
     /*
      * Descrição: Utilizado para obter no início do jogo qual o caractere que o
@@ -179,53 +174,65 @@ public class App {
         }
     }
 
-    /*
-     * Descrição: Utilizado para validar se a jogada do usuário é uma jogada válida.
-     * Uma jogada é considerada válida quando ela está presente dentro da lista de
-     * posicoesLivres. Desta forma, o método recebe a string com as posições livres,
-     * além da linha e coluna jogada pelo usuário. O método verifica se a linha e
-     * coluna está presente dentro da string de posições livres, se estiver retorna
-     * true se não retorna false. Para descobrir se a linha e coluna esta presente
-     * dentro da lista de posições livres pense em usar método contanis da string.
-     * Nível de complexidade: 3 de 10
-     */
+ 
     static boolean jogadaValida(String posicoesLivres, int linha, int coluna) {
-        // Verifica se indices estão dentro do tabuleiro
+
+    // TODO 13: Valida se a jogada está nas posições livres
+    // Primeiro valida se os índices estão dentro dos limites do tabuleiro
         if (linha < 0 || linha >= TAMANHO_TABULEIRO || coluna < 0 || coluna >= TAMANHO_TABULEIRO) {
             return false;
-        }
-        String token = "" + linha + coluna;
-        return posicoesLivres != null && posicoesLivres.contains(token);
     }
 
-    /*
-     * Descrição: Utilizado para obter do usuário a linha e a coluna que ele deseja
-     * jogar. Para isto o método deve exibir um mensagem informando que o jogador
-     * deve digitar a linha e a coluna separados por um espaço. O método deve
-     * realizar as validações necessárias para os casos do usuário não digitar
-     * dois valores e também para o caso do usuário não digitar números.
-     * O método deve garantir que o usuário digite os valores conforme solicitado
-     * e devolva os valores lidos somente quando estes atenderam as regras.
-     * Após a leitura dos valores de linha e coluna, o método deve retornar os
-     * valores já no formato de índice, ou seja, no tabuleiro exibimos para o
-     * usuário linha 1, linha 2, linha 3, coluna 1, coluna 2 e coluna 3. O
-     * usuário digita os valores neste formato, no entanto o método ao retonar
-     * os valores deve ajustar a linha 1 para o índice 0, a linha 2 para o índice
-     * 1 e assim sucessivamente, da mesma forma que as colunas.
-     * Após a validação e ajuste dos índices, o método deve verificar se a jogada
-     * do usuário está presente na lista de posicoesLivres que ele recebeu como
-     * parametro. Para isto, o método faz a chamada ao método jogadaValida()
-     * para determinar se a jogada é aceita. Se a jogada não for aceita, é exibido
-     * uma mensagem informando que a jogada não é permitida e reinicia o processo de
-     * leitura de uma nova jogada. Se a jogada for aceita deve devolver os
-     * valores no formato de um vetor de inteiro de duas posições. No índice 0 deste
-     * vetor, deve ser armazenado o valor da linha jogada pelo usuário e no índice 1
-     * do vetor, deve ser armazenado a coluna jogada pelo usuário.
-     * Nível de complexidade: 5 de 10
-     */
+    // Converte a jogada para o formato "xy"
+    // Ex: linha 1, coluna 2 vira "12"
+    String posicao = "" + linha + coluna;
+
+    // Verifica se essa posição existe na lista de posições livres
+    // Se existir, a jogada é válida
+        return posicoesLivres.contains(posicao);
+}
+
+
     static int[] obterJogadaUsuario(String posicoesLivres, Scanner teclado) {
-        //TODO 14: Implementar método conforme explicação
+    // TODO 14: Ler linha/coluna, validar e converter índice
+    // Loop infinito até o usuário digitar uma jogada válida
+        while (true) {
+
+        // Formato esperado da entrada
+        System.out.print("Digite linha e coluna (ex: 1 1): ");
+        String entrada = teclado.nextLine();
+
+        // Divide a entrada usando espaço como separador
+        String[] partes = entrada.trim().split(" ");
+
+        // Valida se o usuário digitou exatamente dois valores
+        if (partes.length != 2) {
+            System.out.println("Entrada inválida. Use dois números.");
+            continue;
+        }
+
+        try {
+            // Converte os valores digitados para inteiros e ajusta para índice (0-based)
+            int linha = Integer.parseInt(partes[0]) - 1;
+            int coluna = Integer.parseInt(partes[1]) - 1;
+
+            // Verifica se a jogada é válida (posição livre e dentro do tabuleiro)
+            if (jogadaValida(posicoesLivres, linha, coluna)) {
+
+                // Retorna a jogada no formato de vetor [linha, coluna]
+                return new int[]{linha, coluna};
+
+            } else {
+                System.out.println("Jogada inválida ou posição ocupada.");
+            }
+
+        } catch (NumberFormatException e) {
+            // Captura erro caso o usuário digite algo que não seja número
+            System.out.println("Digite apenas números.");
+        }
     }
+}
+
 
     /*
      * Descrição: Utilizado para obter do computador a linha e a coluna sorteada.
@@ -362,7 +369,11 @@ public class App {
      */
     static boolean teveGanhador(char caractereJogador) {
         //TODO 20: Implementar método conforme explicação
-    }
+        // Se qualquer uma das condições retornar true, houve vencedor
+        return teveGanhadorLinha(caractereJogador) || teveGanhadorColuna(caractereJogador)
+        || teveGanhadorDiagonalPrincipal(caractereJogador) || teveGanhadorDiagonalSecundaria(caractereJogador);
+}
+
 
     /*
      * Descrição: Todos os métodos abaixo, teveGanhador... funcionam da mesma forma.
@@ -428,7 +439,11 @@ public class App {
      * Nível de complexidade: 3 de 10
      */
     static void atualizaTabuleiro(int[] jogada, char caractereJogador) {
-        //TODO 27: Implementar método conforme explicação
+    //TODO 27: Implementar método conforme explicação
+          tabuleiro[jogada[0]][jogada[1]] = caractereJogador;
+    // jogada[0] representa a linha escolhida
+    // jogada[1] representa a coluna escolhida
+    // Atualiza diretamente a posição do tabuleiro
 
     }
 
