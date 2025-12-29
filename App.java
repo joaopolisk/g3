@@ -102,8 +102,11 @@ public class App {
      * Nível de complexidade: 3 de 10
      */
     static void inicializarTabuleiro() {
-        //TODO 10: Implementar método conforme explicação
-
+        for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+            for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+                tabuleiro[i][j] = ' ';
+            }
+        }
     }
 
     /*
@@ -117,7 +120,24 @@ public class App {
      * Nível de complexidade: 4 de 10
      */
     static char obterCaractereUsuario() {
-        //TODO 11: Implementar método conforme explicação
+        while (true) {
+            System.out.println("Escolha seu caractere entre: " + CARACTERES_IDENTIFICADORES_ACEITOS + " (digite um só caractere)");
+            String linha = teclado.nextLine();
+            if (linha == null) {
+                continue;
+            }
+            linha = linha.trim().toUpperCase();
+            if (linha.length() == 0) {
+                System.out.println("Entrada vazia. Tente novamente.");
+                continue;
+            }
+            char ch = linha.charAt(0);
+            if (CARACTERES_IDENTIFICADORES_ACEITOS.indexOf(ch) != -1) {
+                return ch;
+            } else {
+                System.out.println("Caractere inválido. Use apenas: " + CARACTERES_IDENTIFICADORES_ACEITOS);
+            }
+        }
 
     }
 
@@ -135,7 +155,28 @@ public class App {
      * Nível de complexidade: 4 de 10
      */
     static char obterCaractereComputador(char caractereUsuario) {
-        //TODO 12: Implementar método conforme explicação
+        while (true) {
+            System.out.println("Escolha o caractere para o computador entre: " + CARACTERES_IDENTIFICADORES_ACEITOS + " (não pode ser '" + caractereUsuario + "')");
+            String linha = teclado.nextLine();
+            if (linha == null) {
+                continue;
+            }
+            linha = linha.trim().toUpperCase();
+            if (linha.length() == 0) {
+                System.out.println("Entrada vazia. Tente novamente.");
+                continue;
+            }
+            char ch = linha.charAt(0);
+            if (CARACTERES_IDENTIFICADORES_ACEITOS.indexOf(ch) == -1) {
+                System.out.println("Caractere inválido. Use apenas: " + CARACTERES_IDENTIFICADORES_ACEITOS);
+                continue;
+            }
+            if (ch == Character.toUpperCase(caractereUsuario)) {
+                System.out.println("Esse caractere já está sendo usado pelo usuário. Escolha outro.");
+                continue;
+            }
+            return ch;
+        }
     }
 
     /*
@@ -149,7 +190,12 @@ public class App {
      * Nível de complexidade: 3 de 10
      */
     static boolean jogadaValida(String posicoesLivres, int linha, int coluna) {
-        //TODO 13: Implementar método conforme explicação
+        // Verifica se indices estão dentro do tabuleiro
+        if (linha < 0 || linha >= TAMANHO_TABULEIRO || coluna < 0 || coluna >= TAMANHO_TABULEIRO) {
+            return false;
+        }
+        String token = "" + linha + coluna;
+        return posicoesLivres != null && posicoesLivres.contains(token);
     }
 
     /*
@@ -261,7 +307,15 @@ public class App {
      * Nível de complexidade: 5 de 10
      */
     static String retornarPosicoesLivres() {
-        //TODO 19: Implementar método conforme explicação
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+            for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+                if (tabuleiro[i][j] == ' ') {
+                    sb.append(i).append(j).append(';');
+                }
+            }
+        }
+        return sb.toString();
     }
 
 
