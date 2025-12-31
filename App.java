@@ -1,6 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
- 
+
 
 public class App {
     // Estes caracteres são aceitos como caracteres para representarem
@@ -44,7 +44,6 @@ public class App {
 
             if (vezUsuarioJogar){
                 processarVezUsuario(caractereUsuario);
-               
                 //TODO 03: Execute a chamada processar vez do usuario
 
                 // Verifica se o usuario venceu
@@ -90,11 +89,11 @@ public class App {
     }
 
 
- 
+
     static void inicializarTabuleiro() {
     // TODO 10: Inicializa o tabuleiro com espaços em branco
     // Percorre todas as linhas do tabuleiro
-         for (int linha = 0; linha < TAMANHO_TABULEIRO; linha++) {
+        for (int linha = 0; linha < TAMANHO_TABULEIRO; linha++) {
     // Percorre todas as colunas do tabuleiro
             for (int coluna = 0; coluna < TAMANHO_TABULEIRO; coluna++) {
    // Inicializa cada posição com espaço em branco.
@@ -174,7 +173,7 @@ public class App {
         }
     }
 
- 
+
     static boolean jogadaValida(String posicoesLivres, int linha, int coluna) {
 
     // TODO 13: Valida se a jogada está nas posições livres
@@ -553,7 +552,7 @@ public class App {
      */
     static void atualizaTabuleiro(int[] jogada, char caractereJogador) {
     //TODO 27: Implementar método conforme explicação
-          tabuleiro[jogada[0]][jogada[1]] = caractereJogador;
+        tabuleiro[jogada[0]][jogada[1]] = caractereJogador;
     // jogada[0] representa a linha escolhida
     // jogada[1] representa a coluna escolhida
     // Atualiza diretamente a posição do tabuleiro
@@ -569,11 +568,15 @@ public class App {
      */
     static void exibirVitoriaComputador() {
         //TODO 28: Implementar método conforme explicação, Lucas
+        System.out.println();
+        System.out.println("====================");
         System.out.println("O computador venceu!");
+        System.out.println("====================");
         System.out.println();
         System.out.println(" \\O/ ");
         System.out.println("  |  ");
         System.out.println(" / \\ ");
+        System.out.println();
 
     }
 
@@ -586,11 +589,15 @@ public class App {
      */
     static void exibirVitoriaUsuario() {
         //TODO 29: Implementar método conforme explicação, Lucas
-        System.out.println("O usuário venceu!");
+        System.out.println();
+        System.out.println("====================");
+        System.out.println("  O usuário venceu!" );
+        System.out.println("====================");
         System.out.println();
         System.out.println(" \\O/ ");               
         System.out.println("  |  ");
         System.out.println(" / \\ ");
+        System.out.println();
 
     }
 
@@ -603,9 +610,14 @@ public class App {
      */
     static void exibirEmpate() {
         //TODO 30: Implementar método conforme explicação, Lucas
-        System.out.println("Ocorreu empate!");
-        System.out.println(" -------");
-        System.out.println("  0 X 0  ");
+        System.out.println();
+        System.out.println(" ---------------");
+        System.out.println(" Ocorreu empate!");
+        System.out.println(" ---------------");
+        System.out.println();
+        System.out.println("      0 X 0  ");
+        System.out.println();
+        
     }
 
     /*
