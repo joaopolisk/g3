@@ -1,6 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
- 
+
 
 public class App {
     // Estes caracteres são aceitos como caracteres para representarem
@@ -44,7 +44,6 @@ public class App {
 
             if (vezUsuarioJogar){
                 processarVezUsuario(caractereUsuario);
-               
                 //TODO 03: Execute a chamada processar vez do usuario
 
                 // Verifica se o usuario venceu
@@ -90,11 +89,11 @@ public class App {
     }
 
 
- 
+
     static void inicializarTabuleiro() {
     // TODO 10: Inicializa o tabuleiro com espaços em branco
     // Percorre todas as linhas do tabuleiro
-         for (int linha = 0; linha < TAMANHO_TABULEIRO; linha++) {
+        for (int linha = 0; linha < TAMANHO_TABULEIRO; linha++) {
     // Percorre todas as colunas do tabuleiro
             for (int coluna = 0; coluna < TAMANHO_TABULEIRO; coluna++) {
    // Inicializa cada posição com espaço em branco.
@@ -174,7 +173,7 @@ public class App {
         }
     }
 
- 
+
     static boolean jogadaValida(String posicoesLivres, int linha, int coluna) {
 
     // TODO 13: Valida se a jogada está nas posições livres
@@ -309,7 +308,25 @@ public class App {
      * Nível de complexidade: 5 de 10
      */
     static void processarVezUsuario(char caractereUsuario) {
-        //TODO 17: Implementar método conforme explicação
+        System.out.println("É a vez do usuário jogar!");
+
+        // Obtém as posições livres no tabuleiro
+        String posicoesLivres = retornarPosicoesLivres();
+
+        // Se não houver posições livres, nada a fazer
+        if (posicoesLivres == null || posicoesLivres.isEmpty()) {
+            System.out.println("Não há posições livres.");
+            return;
+        }
+
+        // Pede a jogada ao usuário e atualiza o tabuleiro
+        int[] jogada = obterJogadaUsuario(posicoesLivres, teclado);
+        if (jogada == null || jogada.length != 2 || jogada[0] < 0 || jogada[1] < 0) {
+            System.out.println("Jogada inválida recebida. Pulando vez.");
+            return;
+        }
+
+        atualizaTabuleiro(jogada, caractereUsuario);
     }
 
     /*
@@ -324,7 +341,24 @@ public class App {
      * Nível de complexidade: 10 de 10 se o computador for jogar para ganhar
      */
     static void processarVezComputador(char caractereComputador) {
-        //TODO 18: Implementar método conforme explicação
+        System.out.println("É a vez do computador jogar!");
+
+        // Obtém as posições livres
+        String posicoesLivres = retornarPosicoesLivres();
+        if (posicoesLivres == null || posicoesLivres.isEmpty()) {
+            System.out.println("Não há posições livres para o computador.");
+            return;
+        }
+
+        // Obtém a jogada do computador e atualiza o tabuleiro
+        int[] jogada = obterJogadaComputador(posicoesLivres, teclado);
+        if (jogada == null || jogada.length != 2 || jogada[0] < 0 || jogada[1] < 0) {
+            System.out.println("O computador não conseguiu escolher uma jogada válida.");
+            return;
+        }
+
+        atualizaTabuleiro(jogada, caractereComputador);
+        System.out.println("O computador jogou em: " + (jogada[0] + 1) + " " + (jogada[1] + 1));
     }
 
     /*
@@ -387,47 +421,57 @@ public class App {
      * Nível de complexidade: 8 de 10 se o tabuleiro dinâmico 
      */
     static boolean teveGanhadorLinha(char caractereJogador) {
-        //TODO 21: Implementar método conforme explicação
-        if (tabuleiro[0][0] == caractereJogador && tabuleiro[0][1] == caractereJogador && tabuleiro[0][2] == caractereJogador) {
-            return true;
-        } else if (tabuleiro[1][0] == caractereJogador && tabuleiro[1][1] == caractereJogador && tabuleiro[1][2] == caractereJogador) {
-            return true;
-        }else if (tabuleiro[2][0] == caractereJogador && tabuleiro[2][1] == caractereJogador && tabuleiro[2][2] == caractereJogador) {
-            return true;
-        }else{
-            return false;
+        for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+            boolean venceu = true;
+            for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+                if (tabuleiro[i][j] != caractereJogador) {
+                    venceu = false;
+                    break;
+                }
+            }
+            if (venceu) {
+                return true;
+            }
         }
+        return false;
     }
 
     static boolean teveGanhadorColuna(char caractereJogador) {
-        //TODO 22: Implementar método conforme explicação
-        if (tabuleiro[0][0] == caractereJogador && tabuleiro[1][0] == caractereJogador && tabuleiro[2][0] == caractereJogador) {
-            return true;
-        } else if (tabuleiro[0][1] == caractereJogador && tabuleiro[1][1] == caractereJogador && tabuleiro[2][1] == caractereJogador) {
-            return true;
-        }else if (tabuleiro[0][2] == caractereJogador && tabuleiro[1][2] == caractereJogador && tabuleiro[2][2] == caractereJogador) {
-            return true;
-        }else{
-            return false;
+        for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+            boolean venceu = true;
+            for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+                if (tabuleiro[i][j] != caractereJogador) {
+                    venceu = false;
+                    break;
+                }
+            }
+            if (venceu) {
+                return true;
+            }
         }
+        return false;
     }
 
     static boolean teveGanhadorDiagonalPrincipal( char caractereJogador) {
-        //TODO 23: Implementar método conforme explicação
-        if (tabuleiro[0][0] == caractereJogador && tabuleiro[1][1] == caractereJogador && tabuleiro[2][2] == caractereJogador) {
-            return true;
-        }else{
-            return false;
+        boolean venceu = true;
+        for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+            if (tabuleiro[i][i] != caractereJogador) {
+                venceu = false;
+                break;
+            }
         }
+        return venceu;
     }
 
     static boolean teveGanhadorDiagonalSecundaria(char caractereJogador) {
-        //TODO 24: Implementar método conforme explicação
-          if (tabuleiro[0][2] == caractereJogador && tabuleiro[1][1] == caractereJogador && tabuleiro[2][0] == caractereJogador) {
-            return true;
-        }else{
-            return false;
+        boolean venceu = true;
+        for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+            if (tabuleiro[i][TAMANHO_TABULEIRO - 1 - i] != caractereJogador) {
+                venceu = false;
+                break;
+            }
         }
+        return venceu;
     }
 
     /*
@@ -437,8 +481,18 @@ public class App {
      * Nível de complexidade: 3 de 10
      */
     static void limparTela() {
-        //TODO 25: Implementar método conforme explicação        
-    }
+        //TODO 25: Implementar método conforme explicação,  Lucas
+    
+            try {
+                new ProcessBuilder("cmd", "/c", "cls")
+                        .inheritIO()
+                        .start()
+                        .waitFor();
+            } catch (Exception e) {
+                System.out.println("Erro ao limpar a tela: " + e.getMessage());
+            }
+        }
+
 
     /*
      * Descrição: Utilizado para imprimir o tabuleiro o conteúdo do tabuleiro na
@@ -449,9 +503,39 @@ public class App {
      * Nível de complexidade: 4 de 10
      */
     static void exibirTabuleiro() {
-        //TODO 26: Implementar método conforme explicação
-        // execute no início deste método a chamada ao método limparTela
-        // para garantir que seja exibido o tabuleiro sem nenhum conteúdo antes dele.
+        // Limpa a tela antes de exibir o tabuleiro
+        limparTela();
+
+        // Imprime os índices das colunas
+        System.out.print("   ");
+        for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+            System.out.print(" " + (j + 1) + " ");
+        }
+        System.out.println();
+
+        // Imprime cada linha do tabuleiro com separadores
+        for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+            System.out.print((i + 1) + " ");
+            for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+                System.out.print(" " + tabuleiro[i][j] + " ");
+                if (j < TAMANHO_TABULEIRO - 1) {
+                    System.out.print("|");
+                }
+            }
+            System.out.println();
+
+            // Linha separadora entre as linhas
+            if (i < TAMANHO_TABULEIRO - 1) {
+                System.out.print("  ");
+                for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+                    System.out.print("---");
+                    if (j < TAMANHO_TABULEIRO - 1) {
+                        System.out.print("+");
+                    }
+                }
+                System.out.println();
+            }
+        }
     }
 
     /*
@@ -468,7 +552,7 @@ public class App {
      */
     static void atualizaTabuleiro(int[] jogada, char caractereJogador) {
     //TODO 27: Implementar método conforme explicação
-          tabuleiro[jogada[0]][jogada[1]] = caractereJogador;
+        tabuleiro[jogada[0]][jogada[1]] = caractereJogador;
     // jogada[0] representa a linha escolhida
     // jogada[1] representa a coluna escolhida
     // Atualiza diretamente a posição do tabuleiro
@@ -483,7 +567,17 @@ public class App {
      * Nível Complexidade: 2 de 10
      */
     static void exibirVitoriaComputador() {
-        //TODO 28: Implementar método conforme explicação
+        //TODO 28: Implementar método conforme explicação, Lucas
+        System.out.println();
+        System.out.println("====================");
+        System.out.println("O computador venceu!");
+        System.out.println("====================");
+        System.out.println();
+        System.out.println(" \\O/ ");
+        System.out.println("  |  ");
+        System.out.println(" / \\ ");
+        System.out.println();
+
     }
 
     /*
@@ -494,7 +588,17 @@ public class App {
      * Nível Complexidade: 2 de 10
      */
     static void exibirVitoriaUsuario() {
-        //TODO 29: Implementar método conforme explicação
+        //TODO 29: Implementar método conforme explicação, Lucas
+        System.out.println();
+        System.out.println("====================");
+        System.out.println("  O usuário venceu!" );
+        System.out.println("====================");
+        System.out.println();
+        System.out.println(" \\O/ ");               
+        System.out.println("  |  ");
+        System.out.println(" / \\ ");
+        System.out.println();
+
     }
 
     /*
@@ -505,7 +609,15 @@ public class App {
      * Nível Complexidade: 2 de 10
      */
     static void exibirEmpate() {
-        //TODO 30: Implementar método conforme explicação
+        //TODO 30: Implementar método conforme explicação, Lucas
+        System.out.println();
+        System.out.println(" ---------------");
+        System.out.println(" Ocorreu empate!");
+        System.out.println(" ---------------");
+        System.out.println();
+        System.out.println("      0 X 0  ");
+        System.out.println();
+        
     }
 
     /*
@@ -517,7 +629,9 @@ public class App {
      * Nível de complexidade: 3 de 10
      */
     static boolean teveEmpate() {
-        //TODO 31: Implementar método conforme explicação
+        //TODO 31: Implementar método conforme explicação, Lucas
+        String posicoesLivres = retornarPosicoesLivres();
+        return posicoesLivres.isEmpty();
 
     }
 
@@ -530,7 +644,9 @@ public class App {
      * Nível de complexidade: 3 de 10
      */
     static boolean sortearValorBooleano() {
-        //TODO 32: Implementar método conforme explicação
+        //TODO 32: Implementar método conforme explicação, Lucas
+        Random random = new Random();
+        return random.nextBoolean();
     }
 
 
