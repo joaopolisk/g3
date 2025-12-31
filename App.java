@@ -401,6 +401,15 @@ public class App {
 
     static boolean teveGanhadorColuna(char caractereJogador) {
         //TODO 22: Implementar método conforme explicação
+        if (tabuleiro[0][0] == caractereJogador && tabuleiro[1][0] == caractereJogador && tabuleiro[2][0] == caractereJogador) {
+            return true;
+        } else if (tabuleiro[0][1] == caractereJogador && tabuleiro[1][1] == caractereJogador && tabuleiro[2][1] == caractereJogador) {
+            return true;
+        }else if (tabuleiro[0][2] == caractereJogador && tabuleiro[1][2] == caractereJogador && tabuleiro[2][2] == caractereJogador) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
     static boolean teveGanhadorDiagonalPrincipal( char caractereJogador) {
