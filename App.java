@@ -504,9 +504,39 @@ public class App {
      * Nível de complexidade: 4 de 10
      */
     static void exibirTabuleiro() {
-        //TODO 26: Implementar método conforme explicação
-        // execute no início deste método a chamada ao método limparTela
-        // para garantir que seja exibido o tabuleiro sem nenhum conteúdo antes dele.
+        // Limpa a tela antes de exibir o tabuleiro
+        limparTela();
+
+        // Imprime os índices das colunas
+        System.out.print("   ");
+        for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+            System.out.print(" " + (j + 1) + " ");
+        }
+        System.out.println();
+
+        // Imprime cada linha do tabuleiro com separadores
+        for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+            System.out.print((i + 1) + " ");
+            for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+                System.out.print(" " + tabuleiro[i][j] + " ");
+                if (j < TAMANHO_TABULEIRO - 1) {
+                    System.out.print("|");
+                }
+            }
+            System.out.println();
+
+            // Linha separadora entre as linhas
+            if (i < TAMANHO_TABULEIRO - 1) {
+                System.out.print("  ");
+                for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+                    System.out.print("---");
+                    if (j < TAMANHO_TABULEIRO - 1) {
+                        System.out.print("+");
+                    }
+                }
+                System.out.println();
+            }
+        }
     }
 
     /*
