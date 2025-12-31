@@ -309,7 +309,25 @@ public class App {
      * Nível de complexidade: 5 de 10
      */
     static void processarVezUsuario(char caractereUsuario) {
-        //TODO 17: Implementar método conforme explicação
+        System.out.println("É a vez do usuário jogar!");
+
+        // Obtém as posições livres no tabuleiro
+        String posicoesLivres = retornarPosicoesLivres();
+
+        // Se não houver posições livres, nada a fazer
+        if (posicoesLivres == null || posicoesLivres.isEmpty()) {
+            System.out.println("Não há posições livres.");
+            return;
+        }
+
+        // Pede a jogada ao usuário e atualiza o tabuleiro
+        int[] jogada = obterJogadaUsuario(posicoesLivres, teclado);
+        if (jogada == null || jogada.length != 2 || jogada[0] < 0 || jogada[1] < 0) {
+            System.out.println("Jogada inválida recebida. Pulando vez.");
+            return;
+        }
+
+        atualizaTabuleiro(jogada, caractereUsuario);
     }
 
     /*
@@ -324,7 +342,24 @@ public class App {
      * Nível de complexidade: 10 de 10 se o computador for jogar para ganhar
      */
     static void processarVezComputador(char caractereComputador) {
-        //TODO 18: Implementar método conforme explicação
+        System.out.println("É a vez do computador jogar!");
+
+        // Obtém as posições livres
+        String posicoesLivres = retornarPosicoesLivres();
+        if (posicoesLivres == null || posicoesLivres.isEmpty()) {
+            System.out.println("Não há posições livres para o computador.");
+            return;
+        }
+
+        // Obtém a jogada do computador e atualiza o tabuleiro
+        int[] jogada = obterJogadaComputador(posicoesLivres, teclado);
+        if (jogada == null || jogada.length != 2 || jogada[0] < 0 || jogada[1] < 0) {
+            System.out.println("O computador não conseguiu escolher uma jogada válida.");
+            return;
+        }
+
+        atualizaTabuleiro(jogada, caractereComputador);
+        System.out.println("O computador jogou em: " + (jogada[0] + 1) + " " + (jogada[1] + 1));
     }
 
     /*
@@ -387,19 +422,57 @@ public class App {
      * Nível de complexidade: 8 de 10 se o tabuleiro dinâmico 
      */
     static boolean teveGanhadorLinha(char caractereJogador) {
-        //TODO 21: Implementar método conforme explicação
+        for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+            boolean venceu = true;
+            for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+                if (tabuleiro[i][j] != caractereJogador) {
+                    venceu = false;
+                    break;
+                }
+            }
+            if (venceu) {
+                return true;
+            }
+        }
+        return false;
     }
 
     static boolean teveGanhadorColuna(char caractereJogador) {
-        //TODO 22: Implementar método conforme explicação
+        for (int j = 0; j < TAMANHO_TABULEIRO; j++) {
+            boolean venceu = true;
+            for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+                if (tabuleiro[i][j] != caractereJogador) {
+                    venceu = false;
+                    break;
+                }
+            }
+            if (venceu) {
+                return true;
+            }
+        }
+        return false;
     }
 
     static boolean teveGanhadorDiagonalPrincipal( char caractereJogador) {
-        //TODO 23: Implementar método conforme explicação
+        boolean venceu = true;
+        for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+            if (tabuleiro[i][i] != caractereJogador) {
+                venceu = false;
+                break;
+            }
+        }
+        return venceu;
     }
 
     static boolean teveGanhadorDiagonalSecundaria(char caractereJogador) {
-        //TODO 24: Implementar método conforme explicação
+        boolean venceu = true;
+        for (int i = 0; i < TAMANHO_TABULEIRO; i++) {
+            if (tabuleiro[i][TAMANHO_TABULEIRO - 1 - i] != caractereJogador) {
+                venceu = false;
+                break;
+            }
+        }
+        return venceu;
     }
 
     /*
