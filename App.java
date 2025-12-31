@@ -414,10 +414,20 @@ public class App {
 
     static boolean teveGanhadorDiagonalPrincipal( char caractereJogador) {
         //TODO 23: Implementar método conforme explicação
+        if (tabuleiro[0][0] == caractereJogador && tabuleiro[1][1] == caractereJogador && tabuleiro[2][2] == caractereJogador) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
     static boolean teveGanhadorDiagonalSecundaria(char caractereJogador) {
         //TODO 24: Implementar método conforme explicação
+          if (tabuleiro[0][2] == caractereJogador && tabuleiro[1][1] == caractereJogador && tabuleiro[2][0] == caractereJogador) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /*
