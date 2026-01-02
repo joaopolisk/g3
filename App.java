@@ -191,47 +191,36 @@ public class App {
         return posicoesLivres.contains(posicao);
 }
 
-
     static int[] obterJogadaUsuario(String posicoesLivres, Scanner teclado) {
     // TODO 14: Ler linha/coluna, validar e converter índice
     // Loop infinito até o usuário digitar uma jogada válida
         while (true) {
-
-        // Formato esperado da entrada
         System.out.print("Digite linha e coluna (ex: 1 1): ");
-        String entrada = teclado.nextLine();
 
-        // Divide a entrada usando espaço como separador
-        String[] partes = entrada.trim().split(" ");
-
-        // Valida se o usuário digitou exatamente dois valores
-        if (partes.length != 2) {
-            System.out.println("Entrada inválida. Use dois números.");
+        // Verifica se o próximo valor é um número
+        if (!teclado.hasNextInt()) {
+            System.out.println("Digite apenas números.");
+            teclado.nextLine(); // limpa a entrada inválida
             continue;
         }
+        int linha = teclado.nextInt() - 1;
 
-        try {
-            // Converte os valores digitados para inteiros e ajusta para índice (0-based)
-            int linha = Integer.parseInt(partes[0]) - 1;
-            int coluna = Integer.parseInt(partes[1]) - 1;
+        if (!teclado.hasNextInt()) {
+            System.out.println("Digite dois números.");
+            teclado.nextLine();
+            continue;
+        }
+        int coluna = teclado.nextInt() - 1;
 
-            // Verifica se a jogada é válida (posição livre e dentro do tabuleiro)
-            if (jogadaValida(posicoesLivres, linha, coluna)) {
+        teclado.nextLine(); 
 
-                // Retorna a jogada no formato de vetor [linha, coluna]
-                return new int[]{linha, coluna};
-
-            } else {
-                System.out.println("Jogada inválida ou posição ocupada.");
-            }
-
-        } catch (NumberFormatException e) {
-            // Captura erro caso o usuário digite algo que não seja número
-            System.out.println("Digite apenas números.");
+        if (jogadaValida(posicoesLivres, linha, coluna)) {
+            return new int[]{linha, coluna};
+        } else {
+            System.out.println("Jogada inválida ou posição ocupada.");
         }
     }
 }
-
 
     /*
      * Descrição: Utilizado para obter do computador a linha e a coluna sorteada.
