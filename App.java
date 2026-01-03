@@ -18,9 +18,7 @@ public class App {
     
     static Scanner teclado = new Scanner(System.in);
 
-    public static void main(String[] args) {
-
-        
+    public static void main(String[] args) {       
         inicializarTabuleiro();
 
         // Definimos aqui qual é o caractere que cada jogador irá utilizar no jogo.
@@ -42,7 +40,7 @@ public class App {
             jogoContinua = true;
             exibirTabuleiro();
 
-            if (vezUsuarioJogar){
+            if (vezUsuarioJogar) {
                 processarVezUsuario(caractereUsuario);
                 //TODO 03: Execute a chamada processar vez do usuario
 
@@ -84,6 +82,19 @@ public class App {
                 exibirEmpate();
                 jogoContinua = false;
             }
+
+            if (!jogoContinua) {
+                System.out.println("Fim de jogo. Deseja jogar novamente? (sim/nao)");
+                String resposta = teclado.nextLine();
+                if (resposta != null && resposta.trim().equalsIgnoreCase("sim")) {
+                    inicializarTabuleiro();
+                    jogoContinua = true;
+                    // Sorteia novamente quem começa jogando
+                    vezUsuarioJogar = sortearValorBooleano();
+                }
+            }
+
+            System.out.println("Fim de jogo, obrigado por jogar!");
         } while (jogoContinua);
 
         teclado.close();
@@ -298,25 +309,9 @@ public class App {
      * Nível de complexidade: 5 de 10
      */
     static void processarVezUsuario(char caractereUsuario) {
-        System.out.println("É a vez do usuário jogar!");
-
-        // Obtém as posições livres no tabuleiro
-        String posicoesLivres = retornarPosicoesLivres();
-
-        // Se não houver posições livres, nada a fazer
-        if (posicoesLivres == null || posicoesLivres.isEmpty()) {
-            System.out.println("Não há posições livres.");
-            return;
-        }
-
-        // Pede a jogada ao usuário e atualiza o tabuleiro
-        int[] jogada = obterJogadaUsuario(posicoesLivres, teclado);
-        if (jogada == null || jogada.length != 2 || jogada[0] < 0 || jogada[1] < 0) {
-            System.out.println("Jogada inválida recebida. Pulando vez.");
-            return;
-        }
-
-        atualizaTabuleiro(jogada, caractereUsuario);
+        System.out.println("Vez do usuário jogar.");
+        int[] jogadaUsuario = obterJogadaUsuario(retornarPosicoesLivres(), teclado);
+        atualizaTabuleiro(jogadaUsuario, caractereUsuario);
     }
 
     /*
@@ -331,24 +326,9 @@ public class App {
      * Nível de complexidade: 10 de 10 se o computador for jogar para ganhar
      */
     static void processarVezComputador(char caractereComputador) {
-        System.out.println("É a vez do computador jogar!");
-
-        // Obtém as posições livres
-        String posicoesLivres = retornarPosicoesLivres();
-        if (posicoesLivres == null || posicoesLivres.isEmpty()) {
-            System.out.println("Não há posições livres para o computador.");
-            return;
-        }
-
-        // Obtém a jogada do computador e atualiza o tabuleiro
-        int[] jogada = obterJogadaComputador(posicoesLivres, teclado);
-        if (jogada == null || jogada.length != 2 || jogada[0] < 0 || jogada[1] < 0) {
-            System.out.println("O computador não conseguiu escolher uma jogada válida.");
-            return;
-        }
-
-        atualizaTabuleiro(jogada, caractereComputador);
-        System.out.println("O computador jogou em: " + (jogada[0] + 1) + " " + (jogada[1] + 1));
+        System.out.println("Vez do computador jogar.");
+        int[] jogadaComputador = obterJogadaComputador(retornarPosicoesLivres(), teclado);
+        atualizaTabuleiro(jogadaComputador, caractereComputador);
     }
 
     /*
@@ -472,16 +452,26 @@ public class App {
      */
     static void limparTela() {
         //TODO 25: Implementar método conforme explicação,  Lucas
-    
-            try {
-                new ProcessBuilder("cmd", "/c", "cls")
-                        .inheritIO()
-                        .start()
-                        .waitFor();
-            } catch (Exception e) {
-                System.out.println("Erro ao limpar a tela: " + e.getMessage());
+
+        try {
+            String os = System.getProperty("os.name").toLowerCase();
+
+            ProcessBuilder pb;
+            if (os.contains("win")) {
+                pb = new ProcessBuilder("cmd", "/c", "cls");
+            } else {
+                pb = new ProcessBuilder("clear");
+            }
+
+            pb.inheritIO().start().waitFor();
+
+        } catch (Exception e) {
+            // fallback universal
+            for (int i = 0; i < 50; i++) {
+                System.out.println();
             }
         }
+    }
 
 
     /*
@@ -558,15 +548,10 @@ public class App {
      */
     static void exibirVitoriaComputador() {
         //TODO 28: Implementar método conforme explicação, Lucas
-        System.out.println();
-        System.out.println("====================");
+        System.out.println("╔══════════════════════════════╗");
+        System.out.println("║          GAME OVER           ║");
+        System.out.println("╚══════════════════════════════╝");
         System.out.println("O computador venceu!");
-        System.out.println("====================");
-        System.out.println();
-        System.out.println(" \\O/ ");
-        System.out.println("  |  ");
-        System.out.println(" / \\ ");
-        System.out.println();
 
     }
 
