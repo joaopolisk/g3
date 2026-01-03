@@ -66,7 +66,8 @@ public class App {
                 //TODO 06: Este if deve executar apenas se teve ganhador
                 if ( teveGanhador(caractereComputador)/*esreva aqui a chamada para teve ganhador*/ ) {
 
-                    System.out.println("O computador ganhou!!!");
+                    exibirTabuleiro();
+                    exibirVitoriaComputador();
 
                     //TODO 07: Exiba que o computador ganhou
                     jogoContinua = false;
