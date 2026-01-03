@@ -79,7 +79,7 @@ public class App {
         
             //TODO 09: Este if deve executar apenas se o jogo continua E 
             //ocorreu tempate. Utilize o metodo teveEmpate()
-            if ( teveEmpate() ) {
+            if ( jogoContinua && teveEmpate()) {
                 exibirTabuleiro();
                 exibirEmpate();
                 jogoContinua = false;
