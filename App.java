@@ -33,7 +33,7 @@ public class App {
         // Esta variavel é utilizada para definir se o usuário começa a jogar ou não.
         // Valor true, usuario começa jogando, valor false computador começa.
         //TODO 02: obtenha o valor booleano sorteado
-        boolean vezUsuarioJogar = true;
+        boolean vezUsuarioJogar = sortearValorBooleano();
 
         boolean jogoContinua;
 
