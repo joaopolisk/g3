@@ -208,26 +208,34 @@ public class App {
     static int[] obterJogadaUsuario(String posicoesLivres, Scanner teclado) {
     // TODO 14: Ler linha/coluna, validar e converter índice
     // Loop infinito até o usuário digitar uma jogada válida
-        while (true) {
-        System.out.print("Digite linha e coluna (ex: 1 1): ");
+         while (true) {
+            System.out.print("Digite linha e coluna (ex: 11 ou 1 1): ");
+            String entrada = teclado.nextLine();
+            int linha = -1;
+            int coluna = -1;
+        // formato "11"
+         if (entrada.length() == 2 && entrada.charAt(0) >= '0' && entrada.charAt(0) <= '9' && 
+             entrada.charAt(1) >= '0' && entrada.charAt(1) <= '9') {
 
-        // Verifica se o próximo valor é um número
-        if (!teclado.hasNextInt()) {
-            System.out.println("Digite apenas números.");
-            teclado.nextLine(); // limpa a entrada inválida
+            linha = entrada.charAt(0) - '0';
+            coluna = entrada.charAt(1) - '0';
+        }
+        // formato "1 1"
+        else if (entrada.length() == 3 && entrada.charAt(0) >= '0' && entrada.charAt(0) <= '9' &&
+                 entrada.charAt(1) == ' ' && entrada.charAt(2) >= '0' && entrada.charAt(2) <= '9') {
+
+            linha = entrada.charAt(0) - '0';
+            coluna = entrada.charAt(2) - '0';
+        }
+        // Se não encaixou em nenhum formato válido
+        else {
+            System.out.println("Entrada inválida. Use 11 ou 1 1.");
             continue;
         }
-        int linha = teclado.nextInt() - 1;
-
-        if (!teclado.hasNextInt()) {
-            System.out.println("Digite dois números.");
-            teclado.nextLine();
-            continue;
-        }
-        int coluna = teclado.nextInt() - 1;
-
-        teclado.nextLine(); 
-
+        // Ajusta para índice do tabuleiro (0 a 2)
+        linha--;
+        coluna--;
+        // Verifica se a jogada é válida no tabuleiro
         if (jogadaValida(posicoesLivres, linha, coluna)) {
             return new int[]{linha, coluna};
         } else {
