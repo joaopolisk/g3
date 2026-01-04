@@ -94,8 +94,10 @@ public class App {
                 }
             }
 
-            System.out.println("Fim de jogo, obrigado por jogar!");
+
         } while (jogoContinua);
+
+        System.out.println("Fim de jogo, obrigado por jogar!");
 
         teclado.close();
     }
@@ -548,10 +550,14 @@ public class App {
      */
     static void exibirVitoriaComputador() {
         //TODO 28: Implementar método conforme explicação, Lucas
-        System.out.println("╔══════════════════════════════╗");
-        System.out.println("║          GAME OVER           ║");
-        System.out.println("╚══════════════════════════════╝");
-        System.out.println("O computador venceu!");
+        System.out.println();
+        System.out.print("""
+                ╔══════════════════════════════╗
+                ║          GAME OVER           ║
+                ║     O computador venceu!     ║
+                ╚══════════════════════════════╝
+                """);
+        System.out.println("");
 
     }
 
@@ -565,13 +571,14 @@ public class App {
     static void exibirVitoriaUsuario() {
         //TODO 29: Implementar método conforme explicação, Lucas
         System.out.println();
-        System.out.println("====================");
-        System.out.println("  O usuário venceu!" );
-        System.out.println("====================");
-        System.out.println();
-        System.out.println(" \\O/ ");               
-        System.out.println("  |  ");
-        System.out.println(" / \\ ");
+        System.out.print("""
+                ╔══════════════════════════════╗
+                ║      O USUÁRIO VENCEU!       ║
+                ║            \\O/               ║
+                ║             |                ║
+                ║            / \\               ║
+                ╚══════════════════════════════╝
+                """);
         System.out.println();
 
     }
@@ -586,11 +593,12 @@ public class App {
     static void exibirEmpate() {
         //TODO 30: Implementar método conforme explicação, Lucas
         System.out.println();
-        System.out.println(" ---------------");
-        System.out.println(" Ocorreu empate!");
-        System.out.println(" ---------------");
-        System.out.println();
-        System.out.println("      0 X 0  ");
+        System.out.print("""
+                ╔══════════════════════════════╗
+                ║      A PARTIDA EMPATOU!      ║
+                ║            0 X 0             ║
+                ╚══════════════════════════════╝
+                """);
         System.out.println();
         
     }
