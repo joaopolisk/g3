@@ -18,6 +18,12 @@ public class App {
     
     static Scanner teclado = new Scanner(System.in);
 
+    static int vitoriasUsuario = 0;
+
+    static int vitoriasComputador = 0;
+
+    static int empates = 0; 
+
     public static void main(String[] args) {       
         inicializarTabuleiro();
 
@@ -50,6 +56,9 @@ public class App {
                     
                     exibirTabuleiro();
                     exibirVitoriaUsuario();
+
+                    vitoriasUsuario++;
+
                     jogoContinua = false;
                 }
 
@@ -67,6 +76,8 @@ public class App {
                     exibirTabuleiro();
                     exibirVitoriaComputador();
 
+                    vitoriasComputador++;
+
                     //TODO 07: Exiba que o computador ganhou
                     jogoContinua = false;
                 }
@@ -80,6 +91,9 @@ public class App {
             if ( jogoContinua && teveEmpate()) {
                 exibirTabuleiro();
                 exibirEmpate();
+
+                empates++;
+
                 jogoContinua = false;
             }
 
@@ -97,7 +111,18 @@ public class App {
 
         } while (jogoContinua);
 
-        System.out.println("Fim de jogo, obrigado por jogar!");
+        
+        System.out.println();
+        System.out.print("""
+                ╔══════════════════════════════╗
+                ║         PLACAR FINAL         ║
+                ╠══════════════════════════════╣
+                ║ Usuário     : %3d            ║
+                ║ Computador  : %3d            ║
+                ║ Empates     : %3d            ║
+                ╚══════════════════════════════╝
+
+                Fim de jogo, obrigado por jogar!""".formatted(vitoriasUsuario, vitoriasComputador, empates));
 
         teclado.close();
     }
