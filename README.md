@@ -49,16 +49,6 @@ java App
 
 ---
 
-## 📂 Estrutura do projeto (exemplo)
-
-text
-g3/
- ├── App.java
- └── README.md
-
-
----
-
 ## 🛠️ Tecnologias usadas
 
 * Java
