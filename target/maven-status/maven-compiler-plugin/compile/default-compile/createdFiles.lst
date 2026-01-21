@@ -1,0 +1,5 @@
+com\jogodavelha\model\GameState.class
+com\jogodavelha\model\Jogada.class
+com\jogodavelha\service\JogoDaVelhaService.class
+com\jogodavelha\JogoDaVelhaApplication.class
+com\jogodavelha\controller\JogoDaVelhaController.class

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Velha - Web</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="titulo">🎮 Jogo da Velha</h1>
+        
+        <!-- Tela de configuração -->
+        <div id="config-screen" class="screen active">
+            <div class="config-card">
+                <h2>Configure o Jogo</h2>
+                <div class="input-group">
+                    <label for="caractereUsuario">Seu Símbolo:</label>
+                    <select id="caractereUsuario">
+                        <option value="X">X</option>
+                        <option value="O">O</option>
+                        <option value="U">U</option>
+                        <option value="C">C</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="caractereComputador">Símbolo do Computador:</label>
+                    <select id="caractereComputador">
+                        <option value="O">O</option>
+                        <option value="X">X</option>
+                        <option value="C">C</option>
+                        <option value="U">U</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="iniciarJogo()">Iniciar Jogo</button>
+            </div>
+        </div>
+
+        <!-- Tela do jogo -->
+        <div id="game-screen" class="screen">
+            <div class="placar">
+                <div class="placar-item">
+                    <span class="label">Você</span>
+                    <span class="valor" id="vitoriasUsuario">0</span>
+                </div>
+                <div class="placar-item">
+                    <span class="label">Empates</span>
+                    <span class="valor" id="empates">0</span>
+                </div>
+                <div class="placar-item">
+                    <span class="label">Computador</span>
+                    <span class="valor" id="vitoriasComputador">0</span>
+                </div>
+            </div>
+
+            <div class="status-bar">
+                <p id="status-message">Sua vez!</p>
+            </div>
+
+            <div class="tabuleiro" id="tabuleiro">
+                <!-- Células serão geradas dinamicamente -->
+            </div>
+
+            <div class="acoes">
+                <button class="btn btn-secondary" onclick="reiniciarPartida()">Nova Partida</button>
+                <button class="btn btn-outline" onclick="voltarConfig()">Voltar</button>
+            </div>
+        </div>
+
+        <!-- Modal de resultado -->
+        <div id="resultado-modal" class="modal">
+            <div class="modal-content">
+                <h2 id="resultado-titulo">Você Venceu! 🎉</h2>
+                <p id="resultado-mensagem">Parabéns pela vitória!</p>
+                <button class="btn btn-primary" onclick="fecharModal()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
